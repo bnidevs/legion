@@ -24,7 +24,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: arn:aws:iam::466125340709:role/github-deploy-action
+          role-to-assume: arn:aws:iam::466125340709:role/legion-test-role
           aws-region: us-east-1
       
       - name: Deploy to AWS
