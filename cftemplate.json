@@ -10,7 +10,7 @@
      }
   },
   "Resources":{
-     "legionaire-launch-template":{
+     "legionaireLaunchTemplate":{
         "Type":"AWS::EC2::LaunchTemplate",
         "Properties":{
            "LaunchTemplateData":{
